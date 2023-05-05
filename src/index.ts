@@ -4,9 +4,9 @@ export type TestConfig = {
 };
 
 export default function init(config: TestConfig[]): void {
-  const style = document.createElement("style");
+  const style = globalThis.document.createElement("style");
   style.textContent = `[ab-test-variant]:not([ab-test-variant="control"]) { display: none; }`;
-  document.head.appendChild(style);
+  globalThis.document.head.appendChild(style);
 
   for (const test of config) {
     setupTest(test);
@@ -33,7 +33,7 @@ export default function init(config: TestConfig[]): void {
       }
 
       // Set a cookie for the chosen variant
-      document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=2592000`; // Expires in 30 days
+      globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=2592000`; // Expires in 30 days
     }
   }
 
@@ -63,8 +63,8 @@ export default function init(config: TestConfig[]): void {
   }
 }
 
-if (document?.currentScript?.getAttribute("config")) {
-  const configPath = document.currentScript.getAttribute("config");
+if (globalThis.document?.currentScript?.getAttribute("config")) {
+  const configPath = globalThis.document.currentScript.getAttribute("config");
 
   fetch(configPath)
     .then((response) => response.json())
