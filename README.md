@@ -2,6 +2,11 @@
 
 This is a minimalistic and easy-to-use A/B testing library that enables you to effortlessly set up and manage A/B tests on your website. It is designed to be straightforward, requiring minimal configuration, and ensuring a quick and efficient way to test different variations of your site.
 
+## Demo
+- Check out the [interactive demo](deriv-experiments.github.io/abcd/)
+- Or watch the video:
+https://user-images.githubusercontent.com/129744061/236439561-dc28b1fe-2a2b-42c1-9c9f-e95712955a4e.mov
+
 ## Features
 
 - Simple integration with HTML
