@@ -42,7 +42,7 @@
     "chokidar": "^3.5.3",
     "debounce": "^1.2.1",
     "esbuild": "^0.17.18",
-    "linkedom": "^0.14.26",
+    "jsdom": "^22.0.0",
     "servatron": "^2.4.3",
     "typescript": "^5.0.4"
   }

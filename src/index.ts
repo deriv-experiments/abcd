@@ -1,12 +1,26 @@
+import getCookieValue from './getCookieValue.ts';
+
 export type TestConfig = {
   name: string;
   variants: { [key: string]: number };
 };
 
-function ensureStyleAppended () {
+function ensureStyleAppended() {
+  if (document.getElementById("abTestStyles")) {
+    return;
+  }
+
   const style = globalThis.document.createElement("style");
-  style.textContent = `[ab-test-variant]:not([ab-test-variant="control"]) { display: none; }`;
+  style.id = "abTestStyles";
   globalThis.document.head.appendChild(style);
+
+  insertCssRule('[ab-test-variant]:not([ab-test-variant="control"]) { display: none; }');
+}
+
+function insertCssRule(rule: string) {
+  const stylesheet = document.getElementById("abTestStyles") as HTMLStyleElement;
+  const sheet = stylesheet.sheet as CSSStyleSheet;
+  sheet.insertRule(rule, sheet.cssRules.length);
 }
 
 export default function init(config: TestConfig[]): void {
@@ -15,8 +29,6 @@ export default function init(config: TestConfig[]): void {
   for (const test of config) {
     setupTest(test);
   }
-
-  applyAbTests();
 
   function setupTest(test: TestConfig): void {
     const cookieName = `ab-${test.name}`;
@@ -39,35 +51,16 @@ export default function init(config: TestConfig[]): void {
       // Set a cookie for the chosen variant
       globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=2592000`; // Expires in 30 days
     }
-  }
 
-  function applyAbTests(): void {
-    const testElements = document.querySelectorAll<HTMLElement>("[ab-test-name]");
-
-    for (const element of testElements) {
-      const testName = element.getAttribute("ab-test-name");
-      const testVariant = element.getAttribute("ab-test-variant");
-
-      const chosenVariant = getCookieValue(`ab-${testName}`);
-      if (testVariant === chosenVariant) {
-        element.style.display = "inherit";
-      } else {
-        element.style.display = "none";
-      }
-    }
-  }
-
-  function getCookieValue(name: string): string | undefined {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-
-    if (parts.length === 2) {
-      return parts.pop()?.split(";").shift();
+    // Insert CSS rules for the test
+    for (const variant in test.variants) {
+      const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? "inherit" : "none"}; }`;
+      insertCssRule(rule);
     }
   }
 }
 
-const configPath = globalThis.document?.currentScript?.getAttribute("config")
+const configPath = globalThis.document?.currentScript?.getAttribute("config");
 if (configPath) {
   ensureStyleAppended();
 

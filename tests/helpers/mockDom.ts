@@ -1,7 +1,7 @@
-import { parseHTML } from 'linkedom';
+import { JSDOM } from "jsdom";
 
-export default function reset () {
-  const dom = parseHTML(`
+export default function reset() {
+  const dom = new JSDOM(`
     <!doctype html>
     <html lang="en">
       <head>
@@ -13,11 +13,7 @@ export default function reset () {
   `);
 
   global.window = dom.window;
-  global.document = dom.document;
-
-  global.window.location = {
-    pathname: '/index.html'
-  };
+  global.document = dom.window.document;
 }
 
 reset();
