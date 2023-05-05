@@ -1,8 +1,11 @@
 // src/index.ts
-function init(config) {
+function ensureStyleAppended() {
   const style = globalThis.document.createElement("style");
   style.textContent = `[ab-test-variant]:not([ab-test-variant="control"]) { display: none; }`;
   globalThis.document.head.appendChild(style);
+}
+function init(config) {
+  ensureStyleAppended();
   for (const test of config) {
     setupTest(test);
   }
@@ -45,6 +48,7 @@ function init(config) {
   }
 }
 if (globalThis.document?.currentScript?.getAttribute("config")) {
+  ensureStyleAppended();
   const configPath = globalThis.document.currentScript.getAttribute("config");
   fetch(configPath).then((response) => response.json()).then(init).catch((error) => console.error("Error loading A/B test configuration:", error));
 }
