@@ -42,7 +42,7 @@ export default function init(config: TestConfig[]): void {
   }
 
   function applyAbTests(): void {
-    const testElements = document.querySelectorAll("[ab-test-name]");
+    const testElements = document.querySelectorAll<HTMLElement>("[ab-test-name]");
 
     for (const element of testElements) {
       const testName = element.getAttribute("ab-test-name");
@@ -62,15 +62,14 @@ export default function init(config: TestConfig[]): void {
     const parts = value.split(`; ${name}=`);
 
     if (parts.length === 2) {
-      return parts.pop().split(";").shift();
+      return parts.pop()?.split(";").shift();
     }
   }
 }
 
-if (globalThis.document?.currentScript?.getAttribute("config")) {
+const configPath = globalThis.document?.currentScript?.getAttribute("config")
+if (configPath) {
   ensureStyleAppended();
-
-  const configPath = globalThis.document.currentScript.getAttribute("config");
 
   fetch(configPath)
     .then((response) => response.json())

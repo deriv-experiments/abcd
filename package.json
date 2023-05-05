@@ -12,7 +12,7 @@
     "start": "servatron --spa --bind localhost -d dist & npm run watch",
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "test": "c8 node --experimental-loader ./tests/helpers/hook.js tests/index.ts",
+    "test": "c8 node --experimental-loader ./tests/helpers/hook.js tests/index.ts && tsc",
     "prepublishOnly": "tsc"
   },
   "keywords": [],
