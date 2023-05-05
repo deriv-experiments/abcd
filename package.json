@@ -1,0 +1,32 @@
+{
+  "name": "@deriv-experiments/abcd",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A minimalistic and easy-to-use A/B testing library that enables you to effortlessly set up and manage A/B tests on your website. It is designed to be straightforward, requiring minimal configuration, and ensuring a quick and efficient way to test different variations of your site.",
+  "main": "src/abcd.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "start": "servatron --spa --bind localhost -d dist & npm run watch",
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "test": "c8 node --experimental-loader ./tests/helpers/hook.js tests/index.ts"
+  },
+  "keywords": [],
+  "author": {
+    "email": "mark.wylde@deriv.com",
+    "name": "Mark Wylde",
+    "url": "https://github.com/deriv-experiments"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "basictap": "^4.3.2",
+    "c8": "^7.13.0",
+    "chokidar": "^3.5.3",
+    "debounce": "^1.2.1",
+    "esbuild": "^0.17.18",
+    "linkedom": "^0.14.26",
+    "servatron": "^2.4.3"
+  }
+}

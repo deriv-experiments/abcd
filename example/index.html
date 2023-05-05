@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+  <script src="./abcd.min.js" config="abTestsConfig.json"></script>
+</head>
+<body>
+  <div ab-test-name="header" ab-test-variant="visible">
+    <h1>Greater</h1>
+  </div>
+
+  <div ab-test-name="greeting" ab-test-variant="control">
+    Hello World
+  </div>
+
+  <div ab-test-name="greeting" ab-test-variant="everyone">
+    Hello Everyone
+  </div>
+
+  <div ab-test-name="greeting" ab-test-variant="testers">
+    Hello Testers
+  </div>
+</body>
+</html>
