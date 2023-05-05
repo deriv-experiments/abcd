@@ -1,6 +1,6 @@
 {
   "name": "@deriv-experiments/abcd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "type": "module",
   "description": "A minimalistic and easy-to-use A/B testing library that enables you to effortlessly set up and manage A/B tests on your website. It is designed to be straightforward, requiring minimal configuration, and ensuring a quick and efficient way to test different variations of your site.",
@@ -21,14 +21,20 @@
     "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
-    "ab", "tests", "ab test", "variants", "experiments"
+    "ab",
+    "tests",
+    "ab test",
+    "variants",
+    "experiments"
   ],
   "author": {
     "email": "mark.wylde@deriv.com",
     "name": "Mark Wylde",
     "url": "https://github.com/deriv-experiments"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "devDependencies": {
     "basictap": "^4.3.2",
