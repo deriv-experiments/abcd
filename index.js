@@ -10,7 +10,7 @@ function getCookieValue(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) {
-    const decodedValue = decodeURIComponent(parts.pop()?.split(";").shift() || "");
+    const decodedValue = decodeURIComponent(parts.pop()?.split(";").shift() ?? "");
     if (decodedValue) {
       return decodedValue;
     } else {
@@ -20,8 +20,9 @@ function getCookieValue(name) {
 }
 
 // src/index.ts
+var TEST_EXPIRE_TIME = 60 * 60 * 24 * 30;
 function ensureStyleAppended() {
-  if (document.getElementById("abTestStyles")) {
+  if (document.getElementById("abTestStyles") != null) {
     return;
   }
   const style = globalThis.document.createElement("style");
@@ -44,15 +45,14 @@ function init(config) {
     let chosenVariant = getCookieValue(cookieName);
     if (!chosenVariant) {
       const rand = Math.random();
-      let sum = 0;
+      chosenVariant = "control";
       for (const variant in test.variants) {
-        sum += test.variants[variant];
-        if (rand <= sum) {
+        if (rand <= test.variants[variant]) {
           chosenVariant = variant;
           break;
         }
       }
-      globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=2592000`;
+      globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=${TEST_EXPIRE_TIME}`;
     }
     for (const variant in test.variants) {
       const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? "inherit" : "none"}; }`;
@@ -63,7 +63,9 @@ function init(config) {
 var configPath = globalThis.document?.currentScript?.getAttribute("config");
 if (configPath) {
   ensureStyleAppended();
-  fetch(configPath).then((response) => response.json()).then(init).catch((error) => console.error("Error loading A/B test configuration:", error));
+  fetch(configPath).then(async (response) => await response.json()).then(init).catch((error) => {
+    console.error("Error loading A/B test configuration:", error);
+  });
 }
 export {
   init as default
