@@ -5,7 +5,9 @@ This is a minimalistic and easy-to-use A/B testing library that enables you to e
 ## Demo
 - Check out the [interactive demo](deriv-experiments.github.io/abcd/)
 - Or watch the video:
-https://user-images.githubusercontent.com/129744061/236439561-dc28b1fe-2a2b-42c1-9c9f-e95712955a4e.mov
+
+<video src="https://user-images.githubusercontent.com/129744061/236439561-dc28b1fe-2a2b-42c1-9c9f-e95712955a4e.mov" controls="controls" style="max-width: 730px;">
+</video>
 
 ## Features
 
