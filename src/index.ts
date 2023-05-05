@@ -39,9 +39,11 @@ export default function init (config: TestConfig[]): void {
 
     if (!chosenVariant) {
       const rand = Math.random();
+      let cumulativeProbability = 0;
       chosenVariant = 'control';
       for (const variant in test.variants) {
-        if (rand <= test.variants[variant]) {
+        cumulativeProbability += test.variants[variant];
+        if (rand <= cumulativeProbability) {
           chosenVariant = variant;
           break;
         }
