@@ -20,6 +20,10 @@ jobs:
         run: |
           npm install
           npm run build
+      
+      - name: Stop github jekyll
+        run: |
+          touch dist/.nojekyll
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.3
