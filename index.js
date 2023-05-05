@@ -43,13 +43,13 @@ function init(config) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) {
-      return parts.pop().split(";").shift();
+      return parts.pop()?.split(";").shift();
     }
   }
 }
-if (globalThis.document?.currentScript?.getAttribute("config")) {
+var configPath = globalThis.document?.currentScript?.getAttribute("config");
+if (configPath) {
   ensureStyleAppended();
-  const configPath = globalThis.document.currentScript.getAttribute("config");
   fetch(configPath).then((response) => response.json()).then(init).catch((error) => console.error("Error loading A/B test configuration:", error));
 }
 export {
