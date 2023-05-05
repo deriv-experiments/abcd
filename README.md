@@ -11,6 +11,8 @@ This is a minimalistic and easy-to-use A/B testing library that enables you to e
 
 ## Installation
 
+### Option 1: Script Tag
+
 You can include the abcd library in your project by adding the following script tag to your HTML file:
 
 ```html
@@ -18,6 +20,38 @@ You can include the abcd library in your project by adding the following script 
 ```
 
 Ensure that you replace `"abTestsConfig.json"` with the correct path to your configuration file.
+
+### Option 2: npm Package
+
+You can also install the abcd library as an npm package:
+
+```bash
+npm install @deriv-experiments/abcd
+```
+
+Then, import the library in your JavaScript or TypeScript code:
+
+```javascript
+import abcd from '@deriv-experiments/abcd';
+
+abcd([
+  {
+    "name": "header",
+    "variants": {
+      "control": 0.8,
+      "visible": 0.2
+    }
+  },
+  {
+    "name": "greeting",
+    "variants": {
+      "control": 0.5,
+      "everyone": 0.25,
+      "testers": 0.25
+    }
+  }
+]);
+```
 
 ## Usage
 
@@ -84,12 +118,4 @@ Example HTML:
 
 ### 3. Launch your tests
 
-Once you have set up the configuration file and added the A/B test elements to your HTML, the library will automatically choose a variant for each test based on the probabilities defined in the configuration file. The chosen variants will persist for 30 days using cookies.
-
-## Browser Support
-
-abcd supports all modern browsers, including the latest versions of Chrome, Firefox, Safari, and Edge.
-
-## Contributing
-
-If you'd like to contribute to the project, please submit a pull request or create an issue on our GitHub repository. We appreciate any feedback and contributions to help improve abcd.
+Once you have set up the configuration file and added the A/B test elements to your HTML, the library will automatically choose a variant for each test based on the probabilities defined in the configuration file. The chosen variants will persist

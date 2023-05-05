@@ -3,10 +3,14 @@ export type TestConfig = {
   variants: { [key: string]: number };
 };
 
-export default function init(config: TestConfig[]): void {
+function ensureStyleAppended () {
   const style = globalThis.document.createElement("style");
   style.textContent = `[ab-test-variant]:not([ab-test-variant="control"]) { display: none; }`;
   globalThis.document.head.appendChild(style);
+}
+
+export default function init(config: TestConfig[]): void {
+  ensureStyleAppended();
 
   for (const test of config) {
     setupTest(test);
@@ -64,6 +68,8 @@ export default function init(config: TestConfig[]): void {
 }
 
 if (globalThis.document?.currentScript?.getAttribute("config")) {
+  ensureStyleAppended();
+
   const configPath = globalThis.document.currentScript.getAttribute("config");
 
   fetch(configPath)
