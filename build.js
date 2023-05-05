@@ -2,12 +2,9 @@ import esbuild from 'esbuild';
 import { promises as fs } from 'fs';
 import chokidar from 'chokidar';
 import debounce from 'debounce';
-import { createRequire } from 'node:module';
 
-const require = createRequire(import.meta.url);
-
-async function build() {
-  await fs.cp('example', 'dist', { recursive: true })
+async function build () {
+  await fs.cp('example', 'dist', { recursive: true });
 
   await Promise.all([
     esbuild.build({
@@ -16,12 +13,12 @@ async function build() {
       entryPoints: ['./src/index.ts'],
       outfile: 'dist/index.js',
       loader: {
-        '.ts': 'ts',
+        '.ts': 'ts'
       },
       sourcemap: true,
       target: 'node19',
       platform: 'node',
-      format: 'esm',
+      format: 'esm'
     }),
 
     esbuild.build({

@@ -1,6 +1,6 @@
-import { JSDOM } from "jsdom";
+import { JSDOM } from 'jsdom';
 
-export default function reset() {
+export default function reset (): void {
   const dom = new JSDOM(`
     <!doctype html>
     <html lang="en">

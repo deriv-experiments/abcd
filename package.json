@@ -14,6 +14,7 @@
     "build": "node build.js",
     "watch": "node build.js --watch",
     "test": "c8 node --experimental-loader ./tests/helpers/hook.js tests/index.ts && tsc",
+    "lint": "eslint src/*",
     "prepublishOnly": "tsc"
   },
   "publishConfig": {
@@ -37,11 +38,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/jsdom": "^21.1.1",
     "basictap": "^4.3.2",
     "c8": "^7.13.0",
     "chokidar": "^3.5.3",
     "debounce": "^1.2.1",
     "esbuild": "^0.17.18",
+    "eslint": "^8.39.0",
+    "eslint-config-standard-with-typescript": "^34.0.1",
     "jsdom": "^22.0.0",
     "servatron": "^2.4.3",
     "typescript": "^5.0.4"

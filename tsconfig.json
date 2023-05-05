@@ -9,5 +9,10 @@
     "emitDeclarationOnly": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "ignore": [
+    "tests/**/*.ts"
+  ]
 }
