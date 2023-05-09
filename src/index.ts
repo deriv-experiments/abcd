@@ -5,6 +5,9 @@ export interface TestConfig {
   variants: Record<string, number>
 }
 
+export const abTests: Record<string, string | number> = {};
+(globalThis as any).abTests = abTests;
+
 // Tests expire in 30 days
 const TEST_EXPIRE_TIME = (60 * 60 * 24) * 30;
 
@@ -53,6 +56,7 @@ export default function init (config: TestConfig[]): void {
     }
 
     for (const variant in test.variants) {
+      abTests[test.name] = variant;
       const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? 'inherit' : 'none'}; }`;
       insertCssRule(rule);
     }
