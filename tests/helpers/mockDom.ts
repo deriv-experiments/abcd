@@ -1,4 +1,6 @@
-import { JSDOM } from 'jsdom';
+import { JSDOM, CookieJar } from 'jsdom';
+
+const cookieJar = new CookieJar();
 
 export default function reset (): void {
   const dom = new JSDOM(`
@@ -10,7 +12,10 @@ export default function reset (): void {
       <body>
       </body>
     </html>
-  `);
+  `, {
+    url: 'http://localhost/',
+    cookieJar
+  });
 
   global.window = dom.window;
   global.document = dom.window.document;

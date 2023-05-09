@@ -5,7 +5,7 @@ export interface TestConfig {
   variants: Record<string, number>
 }
 
-export const abTests: Record<string, string | number> = {};
+export let abTests: Record<string, string | number> = {};
 (globalThis as any).abTests = abTests;
 
 // Tests expire in 30 days
@@ -29,8 +29,9 @@ function insertCssRule (rule: string): void {
   sheet.insertRule(rule, sheet.cssRules.length);
 }
 
-export default function init (config: TestConfig[]): void {
+export default function init (config: TestConfig[]): Record<string, string | number> {
   ensureStyleAppended();
+  abTests = {};
 
   for (const test of config) {
     setupTest(test);
@@ -39,6 +40,12 @@ export default function init (config: TestConfig[]): void {
   function setupTest (test: TestConfig): void {
     const cookieName = `ab-${test.name}`;
     let chosenVariant = getCookieValue(cookieName);
+
+    if (chosenVariant && !test.variants[chosenVariant]) {
+      chosenVariant = undefined;
+    }
+
+    abTests[test.name] = chosenVariant ?? 'control';
 
     if (!chosenVariant) {
       const rand = Math.random();
@@ -56,11 +63,12 @@ export default function init (config: TestConfig[]): void {
     }
 
     for (const variant in test.variants) {
-      abTests[test.name] = variant;
       const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? 'inherit' : 'none'}; }`;
       insertCssRule(rule);
     }
   }
+
+  return abTests;
 }
 
 const configPath = globalThis.document?.currentScript?.getAttribute('config');

@@ -192,3 +192,30 @@ test('it exports selected test variants', (t) => {
   t.equal(abTests.greeting, 'test', 'Selected greeting variant is exported');
   t.equal(abTests.color, 'blue', 'Selected color variant is exported');
 });
+
+test('it resets invalid variants', (t) => {
+  resetDom();
+
+  document.cookie = 'ab-greeting=woops';
+  document.cookie = 'ab-color=blue';
+
+  const tests = abcd([
+    {
+      name: 'greeting',
+      variants: {
+        control: 0.5,
+        test: 0.5
+      }
+    },
+    {
+      name: 'color',
+      variants: {
+        control: 0.5,
+        blue: 0.5
+      }
+    }
+  ]);
+
+  t.notEqual(tests.greeting, 'woops', 'Selected greeting is reset');
+  t.equal(tests.color, 'blue', 'Selected color variant is exported');
+});
