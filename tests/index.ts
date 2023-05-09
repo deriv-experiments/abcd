@@ -1,7 +1,7 @@
 import test from 'basictap';
 import resetDom from './helpers/mockDom.ts';
 
-import abcd from '../src/index.ts';
+import abcd, { abTests } from '../src/index.ts';
 
 test('it adds only one stylesheet when init is called twice', (t) => {
   resetDom();
@@ -164,4 +164,31 @@ test('it sets display to none for non-chosen variants', (t) => {
   } else {
     t.fail('Neither control nor test element has display set to inherit');
   }
+});
+
+test('it exports selected test variants', (t) => {
+  resetDom();
+
+  document.cookie = 'ab-greeting=test; path=/';
+  document.cookie = 'ab-color=blue; path=/';
+
+  abcd([
+    {
+      name: 'greeting',
+      variants: {
+        control: 0.5,
+        test: 0.5
+      }
+    },
+    {
+      name: 'color',
+      variants: {
+        control: 0.5,
+        blue: 0.5
+      }
+    }
+  ]);
+
+  t.equal(abTests.greeting, 'test', 'Selected greeting variant is exported');
+  t.equal(abTests.color, 'blue', 'Selected color variant is exported');
 });

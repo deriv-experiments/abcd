@@ -28,6 +28,16 @@ You can include the abcd library in your project by adding the following script 
 
 Ensure that you replace `"abTestsConfig.json"` with the correct path to your configuration file.
 
+This will also put a `abTests` on the `window`.
+
+```html
+<script type="application/javascript">
+if (abTests.greeting === 'everyone') {
+  alert('hello')
+}
+</script>
+```
+
 ### Option 2: npm Package
 
 You can also install the abcd library as an npm package:
@@ -39,7 +49,7 @@ npm install @deriv-experiments/abcd
 Then, import the library in your JavaScript or TypeScript code:
 
 ```javascript
-import abcd from '@deriv-experiments/abcd';
+import abcd, { abTests } from '@deriv-experiments/abcd';
 
 abcd([
   {
@@ -58,6 +68,10 @@ abcd([
     }
   }
 ]);
+
+if (abTests.greeting === 'everyone') {
+  alert('hello')
+}
 ```
 
 ## Usage
