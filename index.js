@@ -68,6 +68,7 @@ function init(config) {
       insertCssRule(rule);
     }
   }
+  globalThis.abTests = abTests;
   return abTests;
 }
 var configPath = globalThis.document?.currentScript?.getAttribute("config");
