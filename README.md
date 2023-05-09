@@ -49,9 +49,9 @@ npm install @deriv-experiments/abcd
 Then, import the library in your JavaScript or TypeScript code:
 
 ```javascript
-import abcd, { abTests } from '@deriv-experiments/abcd';
+import abcd from '@deriv-experiments/abcd';
 
-abcd([
+const tests = abcd([
   {
     "name": "header",
     "variants": {
@@ -69,7 +69,7 @@ abcd([
   }
 ]);
 
-if (abTests.greeting === 'everyone') {
+if (tests.greeting === 'everyone') {
   alert('hello')
 }
 ```
