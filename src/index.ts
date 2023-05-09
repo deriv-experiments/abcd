@@ -68,6 +68,7 @@ export default function init (config: TestConfig[]): Record<string, string | num
     }
   }
 
+  (globalThis as any).abTests = abTests;
   return abTests;
 }
 
