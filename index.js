@@ -20,6 +20,8 @@ function getCookieValue(name) {
 }
 
 // src/index.ts
+var abTests = {};
+globalThis.abTests = abTests;
 var TEST_EXPIRE_TIME = 60 * 60 * 24 * 30;
 function ensureStyleAppended() {
   if (document.getElementById("abTestStyles") != null) {
@@ -57,6 +59,7 @@ function init(config) {
       globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=${TEST_EXPIRE_TIME}`;
     }
     for (const variant in test.variants) {
+      abTests[test.name] = variant;
       const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? "inherit" : "none"}; }`;
       insertCssRule(rule);
     }
@@ -70,6 +73,7 @@ if (configPath) {
   });
 }
 export {
+  abTests,
   init as default
 };
 //# sourceMappingURL=index.js.map
