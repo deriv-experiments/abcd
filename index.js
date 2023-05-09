@@ -39,12 +39,17 @@ function insertCssRule(rule) {
 }
 function init(config) {
   ensureStyleAppended();
+  abTests = {};
   for (const test of config) {
     setupTest(test);
   }
   function setupTest(test) {
     const cookieName = `ab-${test.name}`;
     let chosenVariant = getCookieValue(cookieName);
+    if (chosenVariant && !test.variants[chosenVariant]) {
+      chosenVariant = void 0;
+    }
+    abTests[test.name] = chosenVariant ?? "control";
     if (!chosenVariant) {
       const rand = Math.random();
       let cumulativeProbability = 0;
@@ -59,11 +64,11 @@ function init(config) {
       globalThis.document.cookie = `${cookieName}=${chosenVariant}; path=/; max-age=${TEST_EXPIRE_TIME}`;
     }
     for (const variant in test.variants) {
-      abTests[test.name] = variant;
       const rule = `[ab-test-name="${test.name}"][ab-test-variant="${variant}"] { display: ${variant === chosenVariant ? "inherit" : "none"}; }`;
       insertCssRule(rule);
     }
   }
+  return abTests;
 }
 var configPath = globalThis.document?.currentScript?.getAttribute("config");
 if (configPath) {
